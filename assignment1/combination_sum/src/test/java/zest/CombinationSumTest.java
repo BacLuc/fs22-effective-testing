@@ -1,7 +1,6 @@
 package zest;
 
 import org.apache.commons.lang3.ArrayUtils;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -11,14 +10,13 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-import static java.util.List.*;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static java.util.List.of;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class CombinationSumTest {
 
@@ -34,8 +32,8 @@ class CombinationSumTest {
   void finds_the_combination_sums(int[] array, int sum, List<List<Integer>> expected) {
     List<List<Integer>> result = combinationSum.combinationSum(array, sum);
 
-    assertThat(result, containsInAnyOrder(expected.toArray()));
-    assertThat(result, hasSize(expected.size()));
+    assertThat(result).hasSameElementsAs(expected);
+    assertThat(result).hasSize(expected.size());
   }
 
   public static Stream<Arguments> inputs() {
@@ -72,7 +70,7 @@ class CombinationSumTest {
     int[] primitiveIntegers = ArrayUtils.toPrimitive(integers);
 
     List<List<Integer>> result = combinationSum.combinationSum(primitiveIntegers, target);
-    assertThat(result, hasSize(0));
+    assertThat(result).isEmpty();
   }
 
   @Test
@@ -100,7 +98,7 @@ class CombinationSumTest {
     int[] intArray = IntStream.range(1, arraySize + 1).toArray();
 
     List<List<Integer>> result = combinationSum.combinationSum(intArray, arraySize);
-    assertThat(result, hasSize(5604));
+    assertThat(result).hasSize(5604);
     assertTrue(result.stream().anyMatch(integers -> of(15, 15).equals(integers)));
     assertTrue(result.stream().anyMatch(integers -> of(1, arraySize - 1).equals(integers)));
     assertTrue(result.stream().anyMatch(integers -> of(arraySize).equals(integers)));
@@ -112,7 +110,7 @@ class CombinationSumTest {
     int[] intArray = IntStream.range(1, arraySize + 1).toArray();
 
     List<List<Integer>> result = combinationSum.combinationSum(intArray, arraySize);
-    assertThat(result, hasSize(6842));
+    assertThat(result).hasSize(6842);
     assertTrue(result.stream().anyMatch(integers -> of(15, 16).equals(integers)));
     assertTrue(result.stream().anyMatch(integers -> of(1, arraySize - 1).equals(integers)));
     assertTrue(result.stream().anyMatch(integers -> of(arraySize).equals(integers)));

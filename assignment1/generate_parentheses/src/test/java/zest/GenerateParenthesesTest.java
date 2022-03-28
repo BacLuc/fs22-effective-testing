@@ -6,14 +6,13 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static java.util.List.*;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static java.util.List.of;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class GenerateParenthesesTest {
 
@@ -27,7 +26,7 @@ class GenerateParenthesesTest {
   @ParameterizedTest
   @MethodSource("inputs")
   void generates_parentheses(int input, List<String> expected) {
-    assertThat(generateParentheses.generateParentheses(input), is(expected));
+    assertThat(generateParentheses.generateParentheses(input)).hasSameElementsAs(expected);
   }
 
   public static Stream<Arguments> inputs() {
@@ -40,7 +39,7 @@ class GenerateParenthesesTest {
   @Test
   void generate_parentheses_for_input_8() {
     List<String> strings = generateParentheses.generateParentheses(8);
-    assertThat(strings, hasSize(1430));
+    assertThat(strings).hasSize(1430);
     assertTrue(strings.stream().anyMatch("(((((((())))))))"::equals));
     assertTrue(strings.stream().anyMatch("(((()))()()(()))"::equals));
     assertTrue(strings.stream().anyMatch("()((((()))())())"::equals));
@@ -51,13 +50,13 @@ class GenerateParenthesesTest {
   @Test
   void generate_parentheses_for_input_9() {
     List<String> strings = generateParentheses.generateParentheses(9);
-    assertThat(strings, hasSize(4862));
+    assertThat(strings).hasSize(4862);
   }
 
   @Test
   public void return_list_with_empty_string_for_0() {
     List<String> strings = generateParentheses.generateParentheses(0);
-    assertThat(strings, is(of("")));
+    assertThat(strings).hasSameElementsAs(of(""));
   }
 
   @Test
