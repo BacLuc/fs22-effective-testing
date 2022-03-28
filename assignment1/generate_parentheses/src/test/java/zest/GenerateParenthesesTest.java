@@ -7,6 +7,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.List;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static java.util.List.of;
@@ -34,6 +35,16 @@ class GenerateParenthesesTest {
         Arguments.of(1, of("()")),
         Arguments.of(2, of("(())", "()()")),
         Arguments.of(3, of("((()))", "(()())", "(())()", "()(())", "()()()")));
+  }
+
+  @ParameterizedTest
+  @MethodSource("validInputRange")
+  public void not_throw_exception_for_inputs_1_to_8(int input) {
+    assertThat(generateParentheses.generateParentheses(input)).hasSizeGreaterThan(0);
+  }
+
+  static Stream<Arguments> validInputRange() {
+    return IntStream.range(1, 9).mapToObj(Arguments::of);
   }
 
   @Test
