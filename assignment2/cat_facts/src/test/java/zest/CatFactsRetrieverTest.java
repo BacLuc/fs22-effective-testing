@@ -201,6 +201,77 @@ public class CatFactsRetrieverTest {
 
             assertThat(catFactsRetriever.retrieveLongest(3)).isEqualTo(LONG_FACT);
         }
+
+        @Test
+        public void takes_the_first_fact_if_2_facts_have_same_length() throws IOException {
+            when(httpUtil.get(notNull())).thenReturn(
+                    """
+                            {
+                                "data": [
+                                    {
+                                        "fact": "%s",
+                                        "length": 3
+                                    },
+                                    {
+                                        "fact": "%s",
+                                        "length": 3
+                                    },
+                                    {
+                                        "fact": "%s",
+                                        "length": 1
+                                    }
+                                ]
+                            }
+                            """.formatted(LONG_FACT, FACT, SHORT_FACT));
+
+            assertThat(catFactsRetriever.retrieveLongest(3)).isEqualTo(LONG_FACT);
+        }
+
+        @Test
+        public void returns_the_longest_fact_if_in_the_middle() throws IOException {
+            when(httpUtil.get(notNull())).thenReturn(
+                    """
+                            {
+                                "data": [
+                                    {
+                                        "fact": "%s",
+                                        "length": 2
+                                    },
+                                    {
+                                        "fact": "%s",
+                                        "length": 3
+                                    },
+                                    {
+                                        "fact": "%s",
+                                        "length": 1
+                                    }
+                                ]
+                            }
+                            """.formatted(FACT, LONG_FACT, SHORT_FACT));
+
+            assertThat(catFactsRetriever.retrieveLongest(3)).isEqualTo(LONG_FACT);
+        }
+
+        @Test
+        public void ignores_the_facts_string_length() throws IOException {
+            when(httpUtil.get(notNull())).thenReturn(
+                    """
+                            {
+                                "data": [
+                                    {
+                                        "fact": "%s",
+                                        "length": 2
+                                    },
+                                    {
+                                        "fact": "%s",
+                                        "length": 3
+                                    }
+                                ]
+                            }
+                            """.formatted(LONG_FACT, SHORT_FACT));
+
+            assertThat(catFactsRetriever.retrieveLongest(2)).isEqualTo(SHORT_FACT);
+        }
     }
 
     @Test
