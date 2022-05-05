@@ -1,5 +1,7 @@
 package zest;
 
+import java.util.Arrays;
+
 /**
  * Solution inspired by: https://leetcode.com/problems/design-parking-system/discuss/910746/Simple-java-solution-with-explaination-o(1)-time-o(1)-space-99.74-faster
  */
