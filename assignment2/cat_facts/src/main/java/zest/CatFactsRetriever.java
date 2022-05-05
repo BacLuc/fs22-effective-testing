@@ -8,6 +8,7 @@ import org.json.JSONObject;
 
 public class CatFactsRetriever {
 
+    static final String CATFACTS_WITH_LIMIT = "https://catfact.ninja/facts?limit=";
     private final HttpUtil httpUtil;
 
     public CatFactsRetriever(HttpUtil httpUtil) {
@@ -36,7 +37,7 @@ public class CatFactsRetriever {
      * @return      the longest fact from the list
      */
     public String retrieveLongest(int limit) throws IOException {
-        String response = httpUtil.get("https://catfact.ninja/facts?limit=" + String.valueOf(limit));
+        String response = httpUtil.get(CATFACTS_WITH_LIMIT + String.valueOf(limit));
         JSONArray ja = new JSONObject(response).getJSONArray("data");
 
         int length = 0;
