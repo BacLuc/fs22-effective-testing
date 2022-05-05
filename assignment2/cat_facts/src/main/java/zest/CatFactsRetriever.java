@@ -47,6 +47,7 @@ public class CatFactsRetriever {
                 JSONObject jo = (JSONObject) e;
                 if (jo.getInt("length") > length) {
                     longestFact = jo.getString("fact");
+                    length = jo.getInt("length");
                 }
             }
         }

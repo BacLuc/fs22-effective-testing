@@ -176,6 +176,31 @@ public class CatFactsRetrieverTest {
 
             assertThat(catFactsRetriever.retrieveLongest(3)).isEqualTo(LONG_FACT);
         }
+
+        @Test
+        public void returns_the_longest_fact_if_at_start() throws IOException {
+            when(httpUtil.get(notNull())).thenReturn(
+                    """
+                            {
+                                "data": [
+                                    {
+                                        "fact": "%s",
+                                        "length": 3
+                                    },
+                                    {
+                                        "fact": "%s",
+                                        "length": 2
+                                    },
+                                    {
+                                        "fact": "%s",
+                                        "length": 1
+                                    }
+                                ]
+                            }
+                            """.formatted(LONG_FACT, FACT, SHORT_FACT));
+
+            assertThat(catFactsRetriever.retrieveLongest(3)).isEqualTo(LONG_FACT);
+        }
     }
 
     @Test
