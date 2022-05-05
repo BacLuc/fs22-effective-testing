@@ -7,3 +7,5 @@ andy/
 *.iml
 *.ipr
 out/
+
+.jqwik-database
