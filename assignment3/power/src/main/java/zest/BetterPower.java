@@ -24,10 +24,10 @@ public class BetterPower {
      * In intermediate steps, base and power may be outside the boundaries
      */
     private double calculatePower(double base, int power) {
-        if(power <0) return 1 / base * calculatePower(1 / base, -(power + 1));
-        if(power ==0) return 1;
-        if(power ==2) return base * base;
-        if(power %2==0) return calculatePower(calculatePower(base, power / 2), 2);
+        if (power < 0) return 1 / base * calculatePower(1 / base, -(power + 1));
+        if (power == 0) return 1;
+        if (power == 2) return base * base;
+        if (power % 2 == 0) return calculatePower(calculatePower(base, power / 2), 2);
         else return base * calculatePower(calculatePower(base, power / 2), 2);
     }
 
