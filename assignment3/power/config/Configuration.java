@@ -29,7 +29,7 @@ public class Configuration extends RunConfiguration {
 
   @Override
   public List<String> classesUnderTest() {
-    return List.of("zest.Power");
+    return List.of("zest.BetterPower");
   }
 
   @Override

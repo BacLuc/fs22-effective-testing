@@ -9,16 +9,17 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class PowerTest {
 
     private static final Percentage ERROR_MARGIN = Percentage.withPercentage(1);
-    private Power powerCalculator;
+    private BetterPower powerCalculator;
 
     @BeforeEach
     @BeforeProperty
     void setup() {
-        powerCalculator = new Power();
+        powerCalculator = new BetterPower();
     }
 
     @Property
@@ -68,5 +69,16 @@ class PowerTest {
     })
     void calculate_correct_powers(double base, int power) {
         assertThat(powerCalculator.myPow(base, power)).isCloseTo(Math.pow(base, power), ERROR_MARGIN);
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "-100.0, 2",
+            "100.0, 2",
+            "5.0, -100",
+            "5.0, 100",
+    })
+    void validate_input(double base, int power) {
+        assertThrows(IllegalArgumentException.class, () -> powerCalculator.myPow(base, power));
     }
 }
