@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>ch.uzh.ifi.zest</groupId>
-    <artifactId>JumpGame</artifactId>
+    <artifactId>power</artifactId>
     <version>1.0</version>
 
     <properties>
