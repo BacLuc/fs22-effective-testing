@@ -3,6 +3,7 @@ package zest;
 import net.jqwik.api.*;
 import net.jqwik.api.lifecycle.BeforeProperty;
 import org.assertj.core.data.Percentage;
+import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -10,6 +11,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assumptions.*;
 
 class PowerTest {
 
@@ -24,6 +26,8 @@ class PowerTest {
 
     @Property
     void calculate_powers_correctly(@ForAll("bases") double base, @ForAll("powers") int power) {
+        assumeTrue(Math.abs(Math.pow(base, power)) <= 1E4);
+
         assertThat(powerCalculator.myPow(base, power)).isCloseTo(Math.pow(base, power), ERROR_MARGIN);
     }
 
@@ -54,7 +58,6 @@ class PowerTest {
             "1.0, 2",
             "1.0, 4",
             "1.0, 5",
-            "0.0, -2",
             "0.0, 2",
             "0.0, 4",
             "0.0, 5",
@@ -80,5 +83,18 @@ class PowerTest {
     })
     void validate_input(double base, int power) {
         assertThrows(IllegalArgumentException.class, () -> powerCalculator.myPow(base, power));
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "0.0, -1",
+            "0.01, -3",
+            "1.0974987655, 99",
+            "1.0974987655, 99",
+            "21.5443469004, 3",
+            "-21.5443469004, 3",
+    })
+    void validate_output_contract(double base, int power) {
+        assertThrows(RuntimeException.class, () -> powerCalculator.myPow(base, power));
     }
 }

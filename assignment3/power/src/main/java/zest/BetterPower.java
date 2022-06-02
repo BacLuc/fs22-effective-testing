@@ -13,7 +13,11 @@ public class BetterPower {
             throw new IllegalArgumentException("n must be between -100 and 100");
         }
 
-        return calculatePower(x, n);
+        double result = calculatePower(x, n);
+        if (Math.abs(result) > 1E4) {
+            throw new RuntimeException("Result was too high, was: " + result);
+        }
+        return result;
     }
 
     /**
