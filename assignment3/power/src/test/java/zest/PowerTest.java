@@ -1,0 +1,4 @@
+package zest;
+
+class PowerTest {
+    }
